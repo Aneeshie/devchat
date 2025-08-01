@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { supabaseBrowserClient } from "@/utils/supabase/client";
 import { GithubIcon, MessageCircleCode, StarIcon } from "lucide-react";
 import Text from "@/components/ui/text";
+import { registerWithEmail } from "@/actions/registerWithEmail";
 
 const AuthPage = () => {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -54,7 +55,14 @@ const AuthPage = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    setIsAuthenticating(true);
+    const res = await registerWithEmail(values);
+    const { error } = JSON.parse(res);
+    setIsAuthenticating(false);
+    if (error) {
+      console.log("Sign In Error: " + error);
+      return;
+    }
   }
 
   async function gitAuth(provider: Provider) {
