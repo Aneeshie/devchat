@@ -3,13 +3,12 @@ import { FC, HTMLAttributes } from "react";
 
 type TypographyProps = {
   variant?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
-  text: string;
   className?: string;
 } & HTMLAttributes<HTMLElement>;
 
 const Text: FC<TypographyProps> = ({
   variant = "h1",
-  text,
+  children,
   className,
   ...props
 }) => {
@@ -29,7 +28,7 @@ const Text: FC<TypographyProps> = ({
 
   return (
     <Tag className={combinedClassName} {...props}>
-      {text}
+      {children}
     </Tag>
   );
 };
